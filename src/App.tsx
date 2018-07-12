@@ -1,5 +1,6 @@
 import * as React from 'react';
 import './App.css';
+import Grid from './Grid';
 
 class App extends React.Component {
   public render() {
@@ -9,7 +10,9 @@ class App extends React.Component {
           Project Outline
         </header>
         <nav className="sidenav"/>
-        <main className="main"/>
+        <main className="main">
+          <Grid/>
+        </main>
       </div>
     );
   }
