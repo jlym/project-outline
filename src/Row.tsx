@@ -15,7 +15,7 @@ class Row extends React.Component<IProps> {
                 style={{
                     border: this.props.edit ? "1px solid rgb(230, 230, 230)" : "",
                     display: "grid",
-                    gridTemplateColumns: "30px 1fr 30px",
+                    gridTemplateColumns: "50px 1fr minmax(50px, max-content)",
                     marginLeft: this.props.level * 20,
                 }}
             >
