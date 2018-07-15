@@ -9,7 +9,6 @@ class App extends React.Component {
         <header className="App-header">
           Project Outline
         </header>
-        <nav className="sidenav"/>
         <main className="main">
           <Grid/>
         </main>
