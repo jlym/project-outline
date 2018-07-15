@@ -1,11 +1,11 @@
-import {ContentState, Editor, EditorState} from 'draft-js';
+import {Editor, EditorState} from 'draft-js';
 
 import 'draft-js/dist/Draft.css';
 import * as React from 'react';
 
 
 interface IProps {
-    text?: string
+    editorState?: EditorState
 }
 
 interface IState {
@@ -15,19 +15,11 @@ interface IState {
 class TextField extends React.Component<IProps, IState> {    
     constructor(props: IProps) {
         super(props);
+        const editorState = props.editorState || EditorState.createEmpty();
 
-        let editorState;
-        if (props.text) {
-            const contentState = ContentState.createFromText(props.text);
-            editorState = EditorState.createWithContent(contentState);
-        } else {
-            editorState = EditorState.createEmpty();
-        }
-        
         this.state = {
             editorState
         };
-
     }
 
     public render() {

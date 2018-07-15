@@ -1,17 +1,16 @@
 import * as React from 'react';
+import {ITask} from './models';
 import TextField from './TextField';
 import { getOutlineNumber } from './utils/utils';
 
 export interface IProps {
-    level: number;
-    index: number;
-    edit: boolean;
-    title?: string;
+    task: ITask;
+    edit: boolean;    
 }
 
 class Row extends React.Component<IProps> {    
     public render() {
-        const num = getOutlineNumber(this.props.index) + ".";
+        const num = getOutlineNumber(this.props.task.index) + ".";
 
         return (
             <div
@@ -19,7 +18,7 @@ class Row extends React.Component<IProps> {
                     border: this.props.edit ? "1px solid rgb(230, 230, 230)" : "",
                     display: "grid",
                     gridTemplateColumns: "max-content 1fr minmax(50px, max-content)",
-                    marginLeft: this.props.level * 20,
+                    marginLeft: this.props.task.level * 20,
                 }}
             >
                 <div 
@@ -35,7 +34,7 @@ class Row extends React.Component<IProps> {
                         padding: "10px"
                     }}
                 >
-                    <TextField text={this.props.title}/>
+                    <TextField editorState={this.props.task.editorState}/>
                 </div>
                 <div 
                     style = {{

@@ -1,4 +1,6 @@
+import {ContentState, EditorState} from 'draft-js';
 import * as React from 'react';
+import {ITask} from './models';
 import Row from './Row';
 
 interface IProps {    
@@ -8,12 +10,15 @@ interface IState {
     tasks: ITask[];
 }
 
-interface ITask {
-    id: string;
-    index: number;
-    level: number;
-    title: string;
-    parent?: string;
+
+
+const createContentState = (text?: string): EditorState => {
+    if (text) {
+        const contentState = ContentState.createFromText(text);
+        return EditorState.createWithContent(contentState);
+    } else {
+        return EditorState.createEmpty();
+    }
 }
 
 class Grid extends React.Component<IProps, IState> {
@@ -23,12 +28,14 @@ class Grid extends React.Component<IProps, IState> {
         this.state = {
             tasks: [
                 {
+                    editorState: createContentState("Squad Streaming v1"),
                     id: "a",
                     index: 0,
                     level: 0,
-                    title: "Squad Streaming v1"
+                    title: "Squad Streaming v1",
                 },
                 {
+                    editorState: createContentState("Do the backend"),
                     id: "b",
                     index: 0,
                     level: 1,
@@ -36,6 +43,7 @@ class Grid extends React.Component<IProps, IState> {
                     title: "Do the backend",
                 },
                 {
+                    editorState: createContentState("Do the front end"),
                     id: "c",
                     index: 1,
                     level: 1,
@@ -43,6 +51,7 @@ class Grid extends React.Component<IProps, IState> {
                     title: "Do the front end",
                 },
                 {
+                    editorState: createContentState("Squad Streaming v2"),
                     id: "d",
                     index: 1,
                     level: 0,
@@ -57,18 +66,15 @@ class Grid extends React.Component<IProps, IState> {
         const rows = this.state.tasks.map(task => {
             return (
                 <Row 
-                    level={task.level} 
+                    task={task}
                     edit={false} 
-                    key={task.id} 
-                    title={task.title}
-                    index={task.index}
+                    key={task.id}
                 />
             );
         });
         return (
             <div>
                 {rows}
-                <Row level={0} edit={true} index={2} />
             </div>
         );
     }
