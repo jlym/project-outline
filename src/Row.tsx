@@ -1,21 +1,24 @@
 import * as React from 'react';
 import TextField from './TextField';
+import { getOutlineNumber } from './utils/utils';
 
 export interface IProps {
-    level: number
-    edit: boolean
+    level: number;
+    index: number;
+    edit: boolean;
+    title?: string;
 }
 
 class Row extends React.Component<IProps> {    
     public render() {
-        const num = "1.";
+        const num = getOutlineNumber(this.props.index) + ".";
 
         return (
             <div
                 style={{
                     border: this.props.edit ? "1px solid rgb(230, 230, 230)" : "",
                     display: "grid",
-                    gridTemplateColumns: "50px 1fr minmax(50px, max-content)",
+                    gridTemplateColumns: "max-content 1fr minmax(50px, max-content)",
                     marginLeft: this.props.level * 20,
                 }}
             >
@@ -32,7 +35,7 @@ class Row extends React.Component<IProps> {
                         padding: "10px"
                     }}
                 >
-                    <TextField/>
+                    <TextField text={this.props.title}/>
                 </div>
                 <div 
                     style = {{
