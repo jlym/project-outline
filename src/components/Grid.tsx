@@ -1,69 +1,18 @@
-import {ContentState, EditorState} from 'draft-js';
 import * as React from 'react';
+import { connect } from 'react-redux'
+
 import {ITask} from '../models';
+import { IState } from '../redux';
 import Row from './Row';
 
 interface IProps {    
-}
-
-interface IState {
     tasks: ITask[];
 }
 
-
-
-const createContentState = (text?: string): EditorState => {
-    if (text) {
-        const contentState = ContentState.createFromText(text);
-        return EditorState.createWithContent(contentState);
-    } else {
-        return EditorState.createEmpty();
-    }
-}
-
-class Grid extends React.Component<IProps, IState> {
-
-    public constructor(props: IProps) {
-        super(props);
-        this.state = {
-            tasks: [
-                {
-                    editorState: createContentState("Squad Streaming v1"),
-                    id: "a",
-                    index: 0,
-                    level: 0,
-                    title: "Squad Streaming v1",
-                },
-                {
-                    editorState: createContentState("Do the backend"),
-                    id: "b",
-                    index: 0,
-                    level: 1,
-                    parent: "a",
-                    title: "Do the backend",
-                },
-                {
-                    editorState: createContentState("Do the front end"),
-                    id: "c",
-                    index: 1,
-                    level: 1,
-                    parent: "a",
-                    title: "Do the front end",
-                },
-                {
-                    editorState: createContentState("Squad Streaming v2"),
-                    id: "d",
-                    index: 1,
-                    level: 0,
-                    title: "Squad Streaming v2",
-                },
-            ]
-        };
-    }
-
+class Grid extends React.Component<IProps> {
 
     public render() {
-        const rows = this.state.tasks.map(task => {
+        const rows = this.props.tasks.map(task => {
             return (
                 <Row 
                     task={task}
@@ -80,4 +29,10 @@ class Grid extends React.Component<IProps, IState> {
     }
 }
 
-export default Grid;
+const mapStateToProps = (state: IState): IProps => {
+    return ({
+        tasks: state.tasks,
+    });
+};
+
+export default connect(mapStateToProps)(Grid);

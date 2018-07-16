@@ -12,10 +12,12 @@ class Row extends React.Component<IProps> {
     public render() {
         const num = getOutlineNumber(this.props.task.index) + ".";
 
+        const selection = this.props.task.editorState.getSelection();
+        const edit = selection.getHasFocus();
         return (
             <div
                 style={{
-                    border: this.props.edit ? "1px solid rgb(230, 230, 230)" : "",
+                    border: edit ? "1px solid rgb(230, 230, 230)" : "",
                     display: "grid",
                     gridTemplateColumns: "max-content 1fr minmax(50px, max-content)",
                     marginLeft: this.props.task.level * 20,
@@ -23,7 +25,7 @@ class Row extends React.Component<IProps> {
             >
                 <div 
                     style = {{
-                        borderRight: this.props.edit ? "1px solid rgb(230, 230, 230)" : "",
+                        borderRight: edit ? "1px solid rgb(230, 230, 230)" : "",
                         padding: "10px"
                     }}
                 >
@@ -34,16 +36,14 @@ class Row extends React.Component<IProps> {
                         padding: "10px"
                     }}
                 >
-                    <TextField editorState={this.props.task.editorState}/>
+                    <TextField editorState={this.props.task.editorState} taskID={this.props.task.id}/>
                 </div>
                 <div 
                     style = {{
-                        borderLeft: this.props.edit ? "1px solid rgb(230, 230, 230)" : "",
+                        borderLeft: edit ? "1px solid rgb(230, 230, 230)" : "",
                         padding: "10px"
                     }}
-                >
-                    <TextField/>
-                </div>
+                />
             </div>
         );
     }
