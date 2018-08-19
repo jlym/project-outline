@@ -1,37 +1,34 @@
 import {Editor, EditorState} from 'draft-js';
+
 import 'draft-js/dist/Draft.css';
 import * as React from 'react';
-import { connect } from 'react-redux'
-import { Dispatch } from 'redux';
-import {IEditTitleAction} from '../redux';
 
-interface IPublicProps {
-    editorState: EditorState;
-    taskID: string;
+
+interface IProps {
+    editorState?: EditorState
 }
 
-interface IReduxProps {
-    editState: (id: string, editorState: EditorState) => IEditTitleAction;
+interface IState {
+    editorState: EditorState
 }
 
-type IProps = IPublicProps & IReduxProps;
+class TextField extends React.Component<IProps, IState> {    
+    constructor(props: IProps) {
+        super(props);
+        const editorState = props.editorState || EditorState.createEmpty();
 
-class TextFieldComponent extends React.Component<IProps> {    
+        this.state = {
+            editorState
+        };
+    }
+
     public render() {
-        return <Editor editorState={this.props.editorState} onChange={this.onChange} />;
+        return <Editor editorState={this.state.editorState} onChange={this.onChange} />;
     }
 
     private onChange = (editorState: EditorState) => {
-        this.props.editState(this.props.taskID, editorState);
+        this.setState({ editorState });
     }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch<IEditTitleAction>): IReduxProps => ({
-    editState: (id: string, editorState: EditorState) => dispatch({
-        id,
-        titleEditorState: editorState,
-        type: "EditTitle"
-    })
-})
-
-export default connect(null, mapDispatchToProps)(TextFieldComponent);
+export default TextField;
