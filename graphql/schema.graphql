@@ -1,0 +1,24 @@
+type Query {
+    tasks(first: Int!, after: Cursor!): TaskConnection
+}
+
+type TaskConnection {
+    edges: [TaskEdge!]
+    pageInfo: PageInfo!
+}
+
+type PageInfo {
+    hasNextPage: Boolean!
+}
+
+type TaskEdge {
+    node: Task
+    cursor: Cursor!
+}
+
+type Task {
+    id: ID!
+    index: Int!
+    level: Int!
+    title: String!
+}
