@@ -1,7 +1,7 @@
 import * as React from 'react';
-import {ITask} from '../models';
-import { getOutlineNumber } from '../utils/utils';
+import {ITask} from './models';
 import TextField from './TextField';
+import { getOutlineNumber } from './utils/utils';
 
 export interface IProps {
     task: ITask;

@@ -1,6 +1,6 @@
 import {ContentState, EditorState} from 'draft-js';
 import * as React from 'react';
-import {ITask} from '../models';
+import {ITask} from './models';
 import Row from './Row';
 
 interface IProps {    
