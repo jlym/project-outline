@@ -1,5 +1,7 @@
 import {ContentState, EditorState} from 'draft-js';
+import gql from 'graphql-tag';
 import * as React from 'react';
+import { Query } from 'react-apollo';
 import {ITask} from './models';
 import Row from './Row';
 
@@ -10,7 +12,16 @@ interface IState {
     tasks: ITask[];
 }
 
-
+const GetTasks = gql`
+    {
+        tasks @client {
+            id
+            index
+            level
+            title
+        }
+    }
+`;
 
 const createContentState = (text?: string): EditorState => {
     if (text) {
@@ -63,6 +74,7 @@ class Grid extends React.Component<IProps, IState> {
 
 
     public render() {
+        
         const rows = this.state.tasks.map(task => {
             return (
                 <Row 
@@ -73,9 +85,13 @@ class Grid extends React.Component<IProps, IState> {
             );
         });
         return (
-            <div>
-                {rows}
-            </div>
+            <Query query={GetTasks}>
+                {({ data }) => (
+
+                    data.
+                    rows
+                )}                
+            </Query>
         );
     }
 }
